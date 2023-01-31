@@ -52,7 +52,8 @@ export class PngFileParser extends FileParserBase {
 
 	async findPngChunksInRange(offset, end) {
 		let {file} = this
-		while (offset < end) {
+		await this.file.ensureChunk(offset, 12)
+		while (file.chunked && this.file.available(offset, 12) || offset < end) {
 			let size = file.getUint32(offset) // size without crc
 			let marker = file.getUint32(offset + LENGTH_SIZE)
 			let name = file.getString(offset + LENGTH_SIZE, 4)
@@ -65,6 +66,7 @@ export class PngFileParser extends FileParserBase {
 			else
 				this.unknownChunks.push(seg)
 			offset += length
+			await this.file.ensureChunk(offset, 12)
 		}
 	}
 
