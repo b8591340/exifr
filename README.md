@@ -509,7 +509,7 @@ TIFF Segment consists of various IFD's (Image File Directories) aka blocks.
 Notable large tags from EXIF block that are not parsed by default but can be enabed if needed.
 
 * `options.makerNote` type: `bool` default: `false`
-<br>0x927C MakerNote tag 
+<br>0x927C MakerNote tag
 * `options.userComment` type: `bool` default: `false`
 <br>0x9286 UserComment tag
 
@@ -560,8 +560,8 @@ Enables looking for more than just a single segment of ICC or XMP (XMP Extended)
 Side effect: Disables chunked reading. The whole file has to be read to locate all segments.
 
 When is it useful:
-* VR photos with combination of left/right eye (XMP Extended) 
-* "Portrait mode" photo that contains depth map (XMP Extended) 
+* VR photos with combination of left/right eye (XMP Extended)
+* "Portrait mode" photo that contains depth map (XMP Extended)
 * Photos with custom ICC color profile
 
 Sub-options:
@@ -624,7 +624,7 @@ Type: `number`
 <br>
 Default: `512` Bytes in Node / `65536` (64 KB) in browser
 
-Size (in bytes) of the first chunk that probes the file for traces of exif or metadata. 
+Size (in bytes) of the first chunk that probes the file for traces of exif or metadata.
 
 *In browser, it's usually better to read just a larger chunk in hope that it contains the whole EXIF (and not just the beginning) instead of loading multiple subsequent chunks. Whereas in Node.js it's preferable to read as little data as possible and `fs.read()` does not cause slowdowns.*
 
@@ -642,7 +642,7 @@ Default: `5`
 
 Max amount of subsequent chunks allowed to read in which exifr searches for data segments and blocks. I.e. failsafe that prevents from reading the whole file if it does not contain all of the segments or blocks requested in `options`.
 
-This limit is bypassed if multi-segment segments ocurs in the file and if [`options.multiSegment`](#optionsmultisegment) allows reading all of them.
+This limit is bypassed if multi-segment segments occurs in the file and if [`options.multiSegment`](#optionsmultisegment) allows reading all of them.
 
 *If the exif isn't found within N chunks (64\*5 = 320KB) it probably isn't in the file and it's not worth reading anymore.*
 
@@ -653,6 +653,13 @@ Default: {}
 
 Additional HTTP headers to include when fetching chunks from URLs that require
 Authorization or other custom headers.
+
+#### `options.externalReader`
+Type: `function`
+<br>
+Default: `undefined`
+
+Async function that receives three parameters - `input`, `offset`, and `length` – and returns an `ArrayBuffer` containing the requested chunk from the input source. If `offset` is missing, `undefined`, or `null`, the function should return the whole file.
 
 ### Output format
 
@@ -846,7 +853,7 @@ EXIF Data are mostly numeric enums, stored under numeric code. Dictionaries are 
 * **Value dict** translates vales from enum to string description (`Orientation` becomes `'Rotate 180'` instead of `3`)
 * **Reviver** further modifies the value (converts date string to an instance of `Date`)
 
-Exifr's dictionaries are based on [exiftool.org](https://exiftool.org). Specifically these: 
+Exifr's dictionaries are based on [exiftool.org](https://exiftool.org). Specifically these:
 TIFF ([EXIF](https://exiftool.org/TagNames/EXIF.html) & [GPS](https://exiftool.org/TagNames/GPS.html)),
 [ICC](https://exiftool.org/TagNames/ICC_Profile.html),
 [IPTC](https://exiftool.org/TagNames/IPTC.html),
@@ -935,9 +942,9 @@ Even though IFD0 (Image block) stores pointers to EXIF and GPS blocks and is thu
 
 ```js
 // do this:
-let options = {ifd0: false, exif: true} 
+let options = {ifd0: false, exif: true}
 // not this:
-let options = {exif: true} 
+let options = {exif: true}
 ```
 </details>
 
@@ -1043,7 +1050,7 @@ Contributions are welcome in any form. Suggestions, bug reports, docs improvemen
 
 If you're filing an issue, please include:
 
-* The photo that's missing metadata or causing the bug 
+* The photo that's missing metadata or causing the bug
 * Repo or a sandbox ([like this one](https://github.com/MikeKovarik/exifr/issues/20)) with minimal code where the bug is reproducible.
 
 There are so many environments, tools and frameworks and I can't know, nor try them all out. Letting me peek into your setup makes tracking down the problem so much easier.
