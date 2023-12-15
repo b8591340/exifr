@@ -43,7 +43,8 @@
     "build-lite": "rollup -c rollup.config.js lite",
     "build-full": "rollup -c rollup.config.js full",
     "build": "rollup -c rollup.config.js",
-    "prerelease": "npm run build"
+    "prerelease": "npm run build",
+    "prepare": "npm run build-full"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
